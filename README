@@ -42,7 +42,7 @@ For create database, run "createdb.php"
 
 3.Update your position
 In some way get position(GPS receiver etc...), then convert values for decimal notation.
-send the latitude and longitude for insert.php by GET METHOD.
+send the latitude and longitude to insert.php by GET METHOD.
 Values:
 	lat:latitude
 	lon:longitude
