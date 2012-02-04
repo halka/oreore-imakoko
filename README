@@ -21,6 +21,8 @@ createdb.phpを実行してください。
 
 2.他に必要なもの
 prototype.jsが必要ですのでダウンロードしてindex.phpとクライアントもどきのsp.htmlを適宜修正してください。（作った当時は1.6.1）
+Google Maps API v3にもAPI KEYが必要になったみたいなので取得してsp.htmlのYOUR_GOOGLEMAPS_API_KEYのところに入れてください。
+http://code.google.com/apis/maps/documentation/javascript/tutorial.html#api_key
 
 3.つかう
 なんとかしてGPSなりから緯度経度の値をとって10進法に変換してinsert.phpにGETで投げてください。
