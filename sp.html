@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" charset="UTF-8"/>
+    <style type="text/css">
+      html { height: 100%;}
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 50%; display:none;}
+      #main {display:none;}
+      #result {display:none;}
+      .send_b{
+       background-color:#00CD00;
+       width:100%;
+       height:3em;
+       color:#FFFFFF;
+       font-size:1.5em;
+       border-radius:15px;
+       border:none;
+      }
+    </style>
+    <title>aroundhere for smartphone</title>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLEMAPS_API_KEY&sensor=true">
+    </script>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript">
+    var lat=0.0;
+    var lng=0.0;
+      function init()
+      {
+        if(navigator.geolocation)
+        {
+            navigator.geolocation.getCurrentPosition(
+                function (pos){
+                    lat=pos.coords.latitude;
+                    lng=pos.coords.longitude;
+                    //for test
+                    //lat=35.4565;
+                    //lng=135.4323;
+                    draw_maps(lat,lng);
+                    document.getElementById("location").innerHTML=lat+', '+lng;
+                },
+                function (error){
+                    document.getElementById("loading").innerHTML='unable to get your location. check your settings of Location service. (navigator.geolocation is available)';
+                }
+            );
+        }
+        else
+        {
+            document.getElementById("loading").innerHTML='unable to get your location. not supported. (navigator.geolocation is unavailable)';
+        }
+      }
+      function draw_maps(lat,lng) {
+        document.getElementById("loading").style.display="none";
+        document.getElementById("map_canvas").style.display="block";
+        document.getElementById("main").style.display="block";
+        var myOptions = {
+          center: new google.maps.LatLng(lat,lng),
+          zoom: 18,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var myLatlng=new google.maps.LatLng(lat,lng);
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            myOptions);
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title:"YOU!"
+        });
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'latLng':myLatlng},function(result,status){
+            if (status == google.maps.GeocoderStatus.OK) {
+                document.getElementById("address").innerHTML=result[0].formatted_address;
+            }
+            else
+            {
+                document.getElementById("address").innerHTML='unable to get address';
+            }
+        });
+      }
+      function send()
+      {
+        new Ajax.Request('insert.php',{method:'GET',parameters:'lat='+lat+'&lon='+lng,onComplete: show_result});
+        document.getElementById("result").style.display="block";
+        alert(lat+', '+lng);
+      }
+      function show_result(responseHttpObj)
+      {
+        var r=responseHttpObj.responseText;
+        document.getElementById("result").innerHTML=r;
+      }
+    </script>
+  </head>
+  <body onload="init()">
+  <header><h1>oreore imakoko</h1></header>
+  <nav><a href="./">History</a></nav>
+    <div id="loading">Getting your location.</div>
+    <div id="map_canvas" style="width:100%; height:50%"></div>
+    <div id="result"></div>
+    <div id="main">
+    <dl>
+    <dt>Current Position</dt>
+    <dd id="location"></dd>
+    <dt>Address</dt>
+    <dd id="address">Getting</dd>
+    </dl>
+    <button type="button" class="send_b" onclick="send()">send to oreore</button>
+    </div>
+  <footer><address>&copy2012 a_halka</address></footer>
+  </body>
+</html>
