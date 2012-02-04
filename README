@@ -20,7 +20,7 @@ sqlite3を使ってます。使えるようにしてください。
 createdb.phpを実行してください。
 
 2.他に必要なもの
-prototype.jsが必要ですのでダウンロードしてindex.phpを適宜修正してください。（作った当時は1.6.1）
+prototype.jsが必要ですのでダウンロードしてindex.phpとクライアントもどきのsp.htmlを適宜修正してください。（作った当時は1.6.1）
 
 3.つかう
 なんとかしてGPSなりから緯度経度の値をとって10進法に変換してinsert.phpにGETで投げてください。
@@ -34,10 +34,10 @@ lon:経度
 
 Usage
 1.Requirements
-"oreore imakoko" is running on PHP5 and SQLite3, i never known other PHP versions.
+"oreore imakoko" is running on PHP5 and SQLite3, I never known other PHP versions.
 
 2.Setup
-Download "prototype.js" and fix "index.php".(when i wrote, version 1.6.1)
+Download "prototype.js" and fix "index.php".(when I wrote, version 1.6.1)
 For create database, run "createdb.php"
 
 3.Update your position
